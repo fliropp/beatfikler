@@ -69,9 +69,10 @@ class Beatfikler extends Component {
   render() {
     const { playing, bpm } = this.state;
     return <div className="beatfikler">
-    <div className="bpm-slider">
-      <div>{bpm} BPM</div>
+      <div className="bpm-slider">
+        <div> Find yer beat!</div>
         <input type="range" min="60" max="240" value={bpm} onChange={this.handleBpmChange}/>
+        <div>{bpm} BPM</div>
       </div>
       <button onClick={this.startStop}>{playing ? 'Stop' : 'Start'}</button>
       <Sequencer/>

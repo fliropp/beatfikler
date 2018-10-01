@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import SequencerInput from './SequencerInput.js';
 import './beatfikler.css';
 import click1 from './audio/click1.wav';
 import click2 from './audio/click2.wav';
@@ -95,6 +96,7 @@ class Sequencer extends Component {
     return <div className="sequencer">
       <div className='seqHeader'>BEATFIKLER HEADER</div>
       <button onClick={this.startStopSequence}>{this.state.playing ? 'Stop' : 'Start'}</button>
+      <SequencerInput/>
     </div>;
   }
 }
