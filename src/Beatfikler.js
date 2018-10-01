@@ -1,21 +1,23 @@
 import React, { Component } from 'react';
-import Sequencer from './Sequencer.js';
+import Sequencer from './components/Sequencer.js';
 import './beatfikler.css';
 import click1 from './audio/click1.wav';
 import click2 from './audio/click2.wav';
+import { Provider } from 'react-redux';
+import store from './store/store.js';
 
 
 class Beatfikler extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
+    /*this.state = {
       playing: false,
       count: 0,
       bar: 0,
       bpm: 100,
       beatsPerMeasure: 4
-    };
+    };*/
     this.click1 = new Audio(click1);
     this.click2 = new Audio(click2);
   }
@@ -67,16 +69,11 @@ class Beatfikler extends Component {
   };
 
   render() {
-    const { playing, bpm } = this.state;
-    return <div className="beatfikler">
-      <div className="bpm-slider">
-        <div> Find yer beat!</div>
-        <input type="range" min="60" max="240" value={bpm} onChange={this.handleBpmChange}/>
-        <div>{bpm} BPM</div>
+    return <Provider store={store}>
+      <div className="beatfikler">
+        <Sequencer state={this.props}/>
       </div>
-      <button onClick={this.startStop}>{playing ? 'Stop' : 'Start'}</button>
-      <Sequencer/>
-    </div>;
+   </Provider>;
   }
 }
 
