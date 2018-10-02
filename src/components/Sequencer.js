@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SequencesInput from './SequencesInput.js';
+import SequencesView from './SequencesView.js';
 import '../beatfikler.css';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -32,8 +32,8 @@ class Sequencer extends Component {
 
         if(this.props.state.sequence[this.props.state.sequenceIndex + 1] === undefined){
           clearInterval(this.timer);
-          this.resetState();
-          this.setState({playing: false});
+          this.props.resetState();
+          this.props.flipPlaying()
           return;
         }
         this.props.nextSequence();
@@ -64,7 +64,7 @@ class Sequencer extends Component {
     return <div className="sequencer">
       <div className='seqHeader'>BEATFIKLER HEADER</div>
       <button onClick={this.startStopSequence}>{this.props.state.playing ? 'Stop' : 'Start'}</button>
-      <SequencesInput/>
+      <SequencesView/>
     </div>;
   }
 }
@@ -77,7 +77,8 @@ const mapDispatchToProps = (dispatch) => ({
   initSequence: () => { dispatch(actions.initSequence())},
   nextSequence: () => {dispatch(actions.nextSequence())},
   nextBeat: (count, bar) => {dispatch(actions.nextBeat(count, bar))},
-  resetState: () => {dispatch(actions.resetState())}
+  resetState: () => {dispatch(actions.resetState())},
+  flipPlaying: () => {dispatch(actions.flipPlaying())}
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sequencer);
