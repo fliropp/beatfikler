@@ -27,6 +27,9 @@ const sequencerStore = (state = getInitState(), action) => {
       return {...state, sequence:[...state.sequence, {bpm: parseInt(action.bpm), bars: parseInt(action.bars)}]};
     case actions.REORDER_SEQUENCE:
       return {...state, sequence: action.sequence};
+    case actions.REMOVE_SEQUENCE_ENTRY:
+      return {...state, sequence: [...state.sequence.slice(0, action.index),
+                                   ...state.sequence.slice(action.index + 1) ]};
     case actions.INIT_SEQUENCE:
       return {...state, count: 1, playing:true, bpm: state.sequence[state.sequenceIndex].bpm};
     case actions.NEXT_SEQUENCE:
@@ -50,6 +53,8 @@ const sequencerStore = (state = getInitState(), action) => {
       return {...state, notification: action.note};
     case actions.SET_LIST_ITEMS:
       return {...state, listItems: action.list};
+    case actions.REMOVE_LIST_ITEM_ENTRY:
+      return {...state, listItems: state.listItems.filter((item) => item.id !== action.id)}
     case actions.UPDATE_LIST_ITEMS:
       return {...state, listItems:[...state.listItems, {id: `item-${state.listItems.length}`, bpm: parseInt(action.bpm), bars: parseInt(action.bars)}]}
     default:

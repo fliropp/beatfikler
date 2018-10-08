@@ -32,19 +32,24 @@ class SequencesView extends Component {
     if (!result.destination) {
       return;
     }
+    if(result.destination.droppableId === 'trashbin'){
+      this.props.removeSequenceEntry(result.source.index);
+      this.props.removeListItemEntry(result.draggableId);
+    } else {
 
-    const items = reorder(
-      this.props.state.listItems,
-      result.source.index,
-      result.destination.index
-    );
-    this.props.setListItems(items);
-    const newSec = items.map(i => { return {
-      bpm: i.bpm,
-      bars: i.bars
-    }});
-    this.props.reorderSequence(newSec);
-    this.props.setBpm(this.props.state.sequence[0].bpm)
+      const items = reorder(
+        this.props.state.listItems,
+        result.source.index,
+        result.destination.index
+      );
+      this.props.setListItems(items);
+      const newSec = items.map(i => { return {
+        bpm: i.bpm,
+        bars: i.bars
+      }});
+      this.props.reorderSequence(newSec);
+      this.props.setBpm(this.props.state.sequence[0].bpm);
+    }
   }
 
 
@@ -83,6 +88,16 @@ render() {
           </div>
         )}
       </Droppable>
+      <Droppable droppableId="trashbin">
+                    {(provided, snapshot) => (
+                        <div
+                            ref={provided.innerRef}
+                            style={getListStyle(snapshot.isDraggingOver)}>
+                            <img src="../graph/trash_1-512.png" height="100"/>
+                            {provided.placeholder}
+                        </div>
+                    )}
+                </Droppable>
     </DragDropContext>
 
   }
@@ -110,7 +125,9 @@ const mapDispatchToProps = (dispatch) => ({
   updateSequence: (bpm, bars) => { dispatch(actions.updateSequence(bpm , bars)) },
   reorderSequence: (sequence) => { dispatch(actions.reorderSequence(sequence))},
   setListItems: (list) => { dispatch(actions.setListItems(list))},
-  setBpm: (bpm) => { dispatch(actions.setBpm(bpm))}
+  setBpm: (bpm) => { dispatch(actions.setBpm(bpm))},
+  removeSequenceEntry: (index) => {dispatch(actions.removeSequenceEntry(index))},
+  removeListItemEntry: (id) => {dispatch(actions.removeListItemEntry(id))}
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SequencesView);
