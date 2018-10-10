@@ -3,6 +3,7 @@
   max-width: 375px;
   margin: 0 auto;
   padding: 30px;
+  background-color: lightgrey;
 }
 
 .bpm-slider input {
@@ -12,12 +13,17 @@
 
 .beatfikler button {
   background: #c94d46;
-  padding: 10px;
   border: 1px solid #832420;
   border-radius: 2px;
   width: 100px;
   color: #fff;
   font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.draggable {
+  display:flex;
+  flex-direction:row;
 }
 
 .sequences {
@@ -28,18 +34,29 @@
   margin-top:30px;
 }
 
+.sequencer .seqHeader {
+  margin-bottom: 20px;
+}
+
+.panel {
+  width:150px;
+}
+
 .sequenceData {
   display:flex;
   flex-direction:row;
   width:100%;
+}
 
+.sequenceData.current {
+  color:lightgreen;
 }
 
 .sequenceData .bars, .sequenceData .bpm {
-  margin: 1px 10px 1px 10px;
+  margin: 1px 3px 1px 10px;
 }
 
-.newBpm, .newBars, .addSeqButton {
+.newBpm, .newBars {
   width:30px !important;
   height:20px !important;
   margin:10px 10px 10px 10px;
@@ -47,12 +64,18 @@
 
 .addSeqButton{
   font-size: 10px !important;
+  width: 100px !important;
 }
 
 .notification {
-  margin-top:100px;
+  margin-top:30px;
   padding-top:30px;
-  background-color: green;
-  width:60%;
+  background-color: #AFAEAA;
+  width:100%;
   height:50px;
+  font-size: 10px;
+}
+
+.notification .status {
+  color:red;
 }

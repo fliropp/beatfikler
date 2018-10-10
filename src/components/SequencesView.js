@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import SequencesInput from './SequencesInput.js';
+import Notification from './Notification.js';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -52,12 +54,10 @@ class SequencesView extends Component {
     }
   }
 
-
 render() {
 
-
-
-    return <DragDropContext onDragEnd={this.onDragEnd}>
+    return <div className="draggable">
+    <DragDropContext onDragEnd={this.onDragEnd}>
        <Droppable droppableId="droppable">
          {(provided, snapshot) => (
            <div
@@ -76,7 +76,7 @@ render() {
                       provided.draggableProps.style
                     )}
                   >
-                    <div className="sequenceData">
+                    <div className={this.props.state.sequenceIndex === index && this.props.state.playing ? 'sequenceData current': 'sequenceData'}>
                       <div className="bpm">bpm: {item.bpm}</div>
                       <div className="bars">bars: {item.bars}</div>
                     </div>
@@ -88,17 +88,22 @@ render() {
           </div>
         )}
       </Droppable>
+      <div className="panel">
       <Droppable droppableId="trashbin">
                     {(provided, snapshot) => (
                         <div
                             ref={provided.innerRef}
-                            style={getListStyle(snapshot.isDraggingOver)}>
+                            style={getTrashbinStyle(snapshot.isDraggingOver)}>
                             <img src="../graph/trash_1-512.png" height="100"/>
                             {provided.placeholder}
                         </div>
                     )}
                 </Droppable>
+                <SequencesInput/>
+                <Notification/>
+                </div>
     </DragDropContext>
+    </div>
 
   }
 }
@@ -108,13 +113,20 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   padding: grid * 2,
   margin: `0 0 ${grid}px 0`,
   background: isDragging ? 'lightgreen' : 'grey',
+  width:150,
   ...draggableStyle,
 });
 
 const getListStyle = isDraggingOver => ({
   background: isDraggingOver ? 'lightblue' : 'lightgrey',
   padding: grid,
-  width: 250,
+  width: 200,
+});
+
+const getTrashbinStyle = isDraggingOver => ({
+  background: isDraggingOver ? 'lightblue' : 'lightgrey',
+  padding: grid,
+  width: 100,
 });
 
 const mapStateToProps = (state) => ({

@@ -64,6 +64,6 @@ export const removeListItemEntry = (id) => {
   return {type: REMOVE_LIST_ITEM_ENTRY, id}
 }
 
-export const updateListItems = (bpm, bars) => {
-  return {type: UPDATE_LIST_ITEMS, bpm, bars}
+export const updateListItems = (bpm, bars, item) => {
+  return {type: UPDATE_LIST_ITEMS, bpm, bars, item}
 }

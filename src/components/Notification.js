@@ -11,7 +11,7 @@ class Notification extends Component {
   render() {
     return <div className="notification">
      <div className="status">{this.props.state.notification}</div>
-     <div className="bpm">BPM: {this.props.state.bpm}</div>
+     <div className="bpm">CURRENT BPM: {this.props.state.bpm}</div>
      </div>;
   }
 }

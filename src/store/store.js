@@ -1,5 +1,6 @@
 import * as actions from '../actions/actions.js';
-import {createStore} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
+import thunk from 'redux-thunk';
 
 const getInitState = () => {
   return {
@@ -54,13 +55,18 @@ const sequencerStore = (state = getInitState(), action) => {
     case actions.SET_LIST_ITEMS:
       return {...state, listItems: action.list};
     case actions.REMOVE_LIST_ITEM_ENTRY:
-      return {...state, listItems: state.listItems.filter((item) => item.id !== action.id)}
+      return {...state, listItems: state.listItems.filter((item) => item.id !== action.id)};
     case actions.UPDATE_LIST_ITEMS:
-      return {...state, listItems:[...state.listItems, {id: `item-${state.listItems.length}`, bpm: parseInt(action.bpm), bars: parseInt(action.bars)}]}
+      return {...state,
+        listItems:[...state.listItems, {
+          id: action.item,
+          bpm: parseInt(action.bpm),
+          bars: parseInt(action.bars)
+        }]};
     default:
       return state
   }
 }
 
-let store = createStore(sequencerStore);
+let store = createStore(sequencerStore, applyMiddleware(thunk));
 export default store;

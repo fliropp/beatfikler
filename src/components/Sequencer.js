@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import SequencesView from './SequencesView.js';
-import SequencesInput from './SequencesInput.js';
-import Notification from './Notification.js';
 import '../beatfikler.css';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -35,7 +33,6 @@ class Sequencer extends Component {
         if(this.props.state.sequence[this.props.state.sequenceIndex + 1] === undefined){
           clearInterval(this.timer);
           this.props.resetState();
-          this.props.flipPlaying()
           return;
         }
         this.props.nextSequence();
@@ -72,8 +69,6 @@ class Sequencer extends Component {
       <div className='seqHeader'>BEATFIKLER</div>
       <button onClick={this.startStopSequence}>{this.props.state.playing ? 'Stop' : 'Start'}</button>
       <SequencesView/>
-      <SequencesInput/>
-      <Notification/>
     </div>;
   }
 }
